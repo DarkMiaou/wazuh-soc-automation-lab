@@ -204,18 +204,6 @@ These changes make the lab reproducible, easier to review, and closer to the wor
 - Security documentation and configuration sanitization
 - Troubleshooting across multiple systems and network boundaries
 
-## Security and Privacy
-
-Before publishing changes, verify that the repository does not contain:
-
-- API keys, passwords, tokens, or authentication headers
-- Active webhook or tunnel URLs
-- Public or private infrastructure addresses that should remain undisclosed
-- Personal email addresses or usernames
-- Screenshots containing credentials, tokens, personal data, or browser session details
-
-Use clear placeholders such as `WAZUH_MANAGER_IP`, `SHUFFLE_WEBHOOK_URL`, and `YOUR_API_KEY` in all public configuration examples.
-
 ## License
 
 This project is licensed under the [MIT License](LICENSE). You may use, modify, and distribute the project in accordance with the terms of that license.
