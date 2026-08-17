@@ -1,0 +1,34 @@
+<!--
+  Example Wazuh integration configuration.
+  Replace SHUFFLE_WEBHOOK_URL with your own Shuffle webhook.
+-->
+
+<ossec_config>
+  <integration>
+    <name>shuffle</name>
+    <hook_url>SHUFFLE_WEBHOOK_URL</hook_url>
+    <rule_id>100002</rule_id>
+    <alert_format>json</alert_format>
+  </integration>
+
+  <integration>
+    <name>shuffle</name>
+    <hook_url>SHUFFLE_WEBHOOK_URL</hook_url>
+    <rule_id>100003</rule_id>
+    <alert_format>json</alert_format>
+  </integration>
+
+  <integration>
+    <name>shuffle</name>
+    <hook_url>SHUFFLE_WEBHOOK_URL</hook_url>
+    <rule_id>100004</rule_id>
+    <alert_format>json</alert_format>
+  </integration>
+
+  <integration>
+    <name>shuffle</name>
+    <hook_url>SHUFFLE_WEBHOOK_URL</hook_url>
+    <rule_id>100005</rule_id>
+    <alert_format>json</alert_format>
+  </integration>
+</ossec_config>

@@ -1,0 +1,64 @@
+<!-- Local rules -->
+
+<!-- Modify it at your will. -->
+<!-- Copyright (C) 2015, Wazuh Inc. -->
+
+<!-- Example -->
+<group name="local,syslog,sshd,">
+
+  <!--
+  Dec 10 01:02:02 host sshd[1234]: Failed none for root from 1.1.1.1 port 1066 ssh2
+  -->
+  <rule id="100001" level="5">
+    <if_sid>5716</if_sid>
+    <srcip>1.1.1.1</srcip>
+    <description>sshd: authentication failed from IP 1.1.1.1.</description>
+    <group>authentication_failed,pci_dss_10.2.4,pci_dss_10.2.5,</group>
+  </rule>
+  
+  <rule id="100002" level="15">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.originalFileName" type="pcre2">(?i)mimikatz\.exe</field>
+    <description>Mimikatz Usage Detected</description>
+    <mitre>
+        <id>T1003</id>
+    </mitre>
+  </rule>
+
+</group>
+
+<group name="windows,sysmon,powershell,v2,">
+  <rule id="100003" level="8">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\powershell\.exe$|\\pwsh\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(-enc|-encodedcommand|executionpolicy\s+bypass|iex|invoke-webrequest|downloadstring|frombase64string)</field>
+    <description>V2 - Suspicious PowerShell execution detected: $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1059.001</id>
+    </mitre>
+  </rule>
+</group>
+
+<group name="windows,sysmon,user_writable_directory,v2,">
+  <rule id="100004" level="7">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\Users\\.*\\(Downloads|AppData\\Local\\Temp|AppData\\Roaming)\\.*\.exe$</field>
+    <description>V2 - Executable launched from user-writable directory: $(win.eventdata.image)</description>
+    <mitre>
+      <id>T1204</id>
+      <id>T1036</id>
+    </mitre>
+  </rule>
+</group>
+
+<group name="windows,sysmon,service_creation,v2,">
+  <rule id="100005" level="9">
+    <if_group>sysmon_event1</if_group>
+    <field name="win.eventdata.image" type="pcre2">(?i)\\sc\.exe$|\\powershell\.exe$|\\pwsh\.exe$</field>
+    <field name="win.eventdata.commandLine" type="pcre2">(?i)(\bcreate\b|new-service|binpath)</field>
+    <description>V2 - Suspicious Windows service creation detected: $(win.eventdata.commandLine)</description>
+    <mitre>
+      <id>T1543.003</id>
+    </mitre>
+  </rule>
+</group>
